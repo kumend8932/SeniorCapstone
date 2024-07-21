@@ -1,0 +1,20 @@
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
+
+public static class ProcessTruckTelemetry
+{
+    [FunctionName("ProcessTruckTelemetry")]
+    public static void Run([IoTHubTrigger("messages/events", Connection = "IoTHubConnectionString")]JObject myEventHubMessage, ILogger log)
+    {
+        log.LogInformation($"C# IoT Hub trigger function processed a message: {myEventHubMessage}");
+        
+        // Process the telemetry data here
+        var truckId = myEventHubMessage["truckId"].ToString();
+        var latitude = myEventHubMessage["latitude"].ToString();
+        var longitude = myEventHubMessage["longitude"].ToString();
+        
+        // Store or process the data as needed
+    }
+}
